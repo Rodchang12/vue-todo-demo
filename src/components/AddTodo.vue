@@ -1,9 +1,18 @@
 <script setup>
-import { ref } from "vue";
+import { ref, defineEmits } from "vue";
 
 const newTodo = ref("");
+
+const emit = defineEmits(["add-todo"]);
+
+
 const addTodo = () => {
-  console.log(newTodo.value);
+  const todo = {
+    id: crypto.randomUUID(),
+    text: newTodo.value,
+    complete: false
+  };
+  emit("add-todo", todo);
 };
 
 

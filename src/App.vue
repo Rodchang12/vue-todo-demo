@@ -10,11 +10,24 @@ const todos = ref(
   }
   ]);
 
+
+const handleAddTodo = (todo) => {
+  todos.value.push(todo);
+};
+
+const handleDeleteTodo = (todoId) => {
+  todos.value = todos.value.filter((todo) => todo.id !== todoId);
+};
+
+const handleCheckTodo = (todoId) => {
+  todos.value = todos.value.map((todo) => todo.id === todoId ? { ...todo, complete: !todo.complete } : todo);
+};
+
 </script>
 
 <template>
-  <div class="flex justify-center min-h-[100vh] items-center flex-col w-48 border-gray-400 border-[2px]">
-    <AddTodo />
-    <TodoList :todos="todos" />
+  <div class="flex justify-center min-h-[100vh] items-center flex-col w-full border-gray-400 border-[2px]">
+    <AddTodo @add-todo="handleAddTodo" />
+    <TodoList :todos="todos" @deleteTodo="handleDeleteTodo" @checkTodo="handleCheckTodo" />
   </div>
 </template>
